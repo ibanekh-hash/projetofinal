@@ -1,0 +1,221 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Perfil - CarBlog{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>👤 Seu Perfil</h1>
+    <p>Gerencie suas informações pessoais</p>
+</div>
+
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                     alt="Avatar" class="avatar-image">
+                <div class="avatar-overlay">
+                    <i class="fas fa-camera"></i>
+                </div>
+            </div>
+            
+            <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+            <p class="username">@{{ user.username }}</p>
+        </div>
+
+        <div class="profile-info">
+            <h3>📋 Informações Pessoais</h3>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>Nome completo:</label>
+                    <span>{% if user.first_name and user.last_name %}{{ user.first_name }} {{ user.last_name }}{% else %}Não informado{% endif %}</span>
+                </div>
+                
+                <div class="info-item">
+                    <label>Email:</label>
+                    <span>{{ user.email|default:"Não informado" }}</span>
+                </div>
+                
+                <div class="info-item">
+                    <label>Data de registro:</label>
+                    <span>{{ user.date_joined|date:"d/m/Y" }}</span>
+                </div>
+                
+                <div class="info-item">
+                    <label>Último login:</label>
+                    <span>{{ user.last_login|date:"d/m/Y H:i"|default:"Nunca" }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <h3>⚙️ Ações</h3>
+            <div class="action-buttons">
+                <a href="/accounts/editar/" class="btn-primary">
+                    <i class="fas fa-edit"></i> Editar Perfil
+                </a>
+                <a href="{% url 'accounts:sair' %}" class="btn-secondary">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </a>
+            </div>
+        </div>
+
+        <div class="profile-stats">
+            <h3>📊 Estatísticas</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Carros postados</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Mensagens</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Seguidores</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.profile-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.profile-avatar {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 1rem;
+}
+
+.avatar-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar-overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #007bff;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.profile-header h2 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.username {
+    color: #666;
+    font-style: italic;
+}
+
+.profile-info {
+    margin-bottom: 2rem;
+}
+
+.profile-info h3 {
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+
+.info-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.info-item label {
+    font-weight: bold;
+    color: #555;
+}
+
+.profile-actions {
+    margin-bottom: 2rem;
+}
+
+.profile-actions h3 {
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.profile-stats h3 {
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+}
+</style>
+{% endblock %}

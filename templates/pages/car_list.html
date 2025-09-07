@@ -1,0 +1,106 @@
+﻿{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Carros - CarBlog{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>🚗 Nuestra Colección de Carros</h1>
+    <p>Descubre los mejores vehículos del mercado</p>
+</div>
+
+<div class="cars-container">
+    {% for carro in carros %}
+    <div class="car-card">
+        <div class="car-image">
+            {% if carro.imagen_url %}
+                <img src="{{ carro.imagen_url }}" alt="{{ carro.marca }} {{ carro.modelo }}">
+            {% else %}
+                <img src="https://via.placeholder.com/300x200/007bff/ffffff?text=No+Image" alt="Imagen no disponible">
+            {% endif %}
+        </div>
+        <div class="car-info">
+            <h3>{{ carro.marca }} {{ carro.modelo }}</h3>
+            <p class="car-year">Año: {{ carro.año }}</p>
+            <p class="car-price">R$ {{ carro.precio }}</p>
+            <p class="car-description">{{ carro.descripcion|truncatewords:20 }}</p>
+            <a href="#" class="btn-primary">Ver Detalles</a>
+        </div>
+    </div>
+    {% empty %}
+    <div class="no-cars">
+        <h2>🚙 No hay carros disponibles</h2>
+        <p>Próximamente agregaremos nuestro catálogo.</p>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+.cars-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.car-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.car-card:hover {
+    transform: translateY(-5px);
+}
+
+.car-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.car-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.car-info {
+    padding: 1.5rem;
+}
+
+.car-info h3 {
+    color: #007bff;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.car-year {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.car-price {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #28a745;
+    margin-bottom: 1rem;
+}
+
+.car-description {
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.no-cars {
+    text-align: center;
+    padding: 3rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+</style>
+{% endblock %}
